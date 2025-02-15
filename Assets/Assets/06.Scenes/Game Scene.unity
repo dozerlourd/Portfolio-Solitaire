@@ -527,6 +527,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controllerManagementSystem: {fileID: 1723292515}
+  startVec2Int: {x: 0, y: 0}
+  endVec2Int: {x: 0, y: 0}
 --- !u!1 &1613916292
 GameObject:
   m_ObjectHideFlags: 0
@@ -692,3 +694,4 @@ MonoBehaviour:
   - {fileID: 2788680851028870949, guid: 3a788deb20298d2489fea9619d0f765a, type: 3}
   - {fileID: 7974002376434699350, guid: f12033b771e5b244c975943be27ddb8b, type: 3}
   - {fileID: 1683492424939801822, guid: cd876f082091d434ca6028df74928894, type: 3}
+  t: {fileID: 67174952983747842, guid: 56b013fd56039a642ad6105b0a4c3ab7, type: 3}
