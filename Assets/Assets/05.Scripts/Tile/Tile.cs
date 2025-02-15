@@ -9,7 +9,9 @@ using UnityEngine.UIElements;
 
 public class Tile : MonoBehaviour
 {
-    [SerializeField] Sprite tileSprite;
+    [SerializeField] string tileName;
+
+    [HideInInspector] public string TileName => tileName;
 
 
     public void TileClickedInteraction()
