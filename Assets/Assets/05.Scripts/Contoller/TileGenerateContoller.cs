@@ -38,7 +38,6 @@ public class TileGenerateContoller : MonoBehaviour
                 GameObject tile = Instantiate(tilePrefabs[generateTileNum], position, Quaternion.identity);
                 tile.name = $"Tile_{tile.GetComponent<Tile>().TileName}";
                 controllerManagementSystem.TileMatchingContoller.board[x, y] = tile;
-                tile.AddComponent<Tile>();
             }
         }
     }

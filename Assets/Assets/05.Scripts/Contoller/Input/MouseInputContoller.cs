@@ -18,23 +18,20 @@ public class MouseInputContoller : MonoBehaviour
             Vector3 mousePos = Mouse.current.position.ReadValue();
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mousePos);
 
-            Vector2Int tile1Vec2Int = TileInfo.WorldToGrid(controllerManagementSystem.TileMatchingContoller.board[0, 0].transform.position);
-            Vector2Int tile2Vec2Int = TileInfo.WorldToGrid(controllerManagementSystem.TileMatchingContoller.board[0, 1].transform.position);
+            //Vector2Int tile1Vec2Int = TileInfo.WorldToGrid(controllerManagementSystem.TileMatchingContoller.board[0, 0].transform.position);
+            //Vector2Int tile2Vec2Int = TileInfo.WorldToGrid(controllerManagementSystem.TileMatchingContoller.board[0, 1].transform.position);
 
-            print(tile1Vec2Int);
-            print(tile2Vec2Int);
-
-            controllerManagementSystem.TileMatchingContoller.CanConnect(tile1Vec2Int, tile2Vec2Int);
-
-            //RaycastHit rayHit;
-            //if(Physics.Raycast(mouseWorldPos, Vector3.forward, out rayHit, 100))
-            //{
-            //    rayHit.collider.TryGetComponent(out Tile tile);
-            //    if (rayHit.collider.CompareTag("Tile") && tile != null)
-            //    {
-            //        tile.TileClickedInteraction();
-            //    }
-            //}
+            RaycastHit rayHit;
+            if (Physics.Raycast(mouseWorldPos, Vector3.forward, out rayHit, 100))
+            {
+                rayHit.collider.TryGetComponent(out Tile tile);
+                if (rayHit.collider.CompareTag("Tile") && tile != null)
+                {
+                    Vector2Int tileVec2Int = TileInfo.WorldToGrid(rayHit.point);
+                    controllerManagementSystem.TileMatchingContoller.SetMatchingVec2Int(tileVec2Int);
+                    //tile.TileClickedInteraction();
+                }
+            }
         }
     }
 }
