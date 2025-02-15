@@ -9,36 +9,28 @@ using UnityEngine.WSA;
 
 public class MouseInputContoller : MonoBehaviour
 {
-    [SerializeField] Tilemap tilemap;
-
     private void Update()
     {
         if(Mouse.current.leftButton.wasPressedThisFrame)
         {
             Vector3 mousePos = Mouse.current.position.ReadValue();
-
-            //RaycastHit hit;
-            //if(Physics.Raycast(mousePos, Vector3.forward, out hit))
-            //{
-            //    if(hit.collider.TryGetComponent(out Tile tile))
-            //    {
-            //        if(tile != null)
-            //        {
-            //            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mousePos);
-            //            Vector3Int tilePosition = tilemap.WorldToCell(mouseWorldPos);
-
-            //            tile.OnTileClicked(tilemap, tilePosition);
-            //        }
-            //    }
-            //}
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mousePos);
-            Vector3Int tilePosition = tilemap.WorldToCell(mouseWorldPos);
 
-            TileBase clickedTile = tilemap.GetTile(tilePosition);
+            mouseWorldPos += Vector3.forward * 5;
+            //Instantiate(test, mouseWorldPos, Quaternion.identity);
 
-            if (clickedTile is Tile tile)
+            Debug.DrawRay(mouseWorldPos, Vector3.forward, Color.red, 100);
+
+            RaycastHit rayHit;
+            if(Physics.Raycast(mouseWorldPos, Vector3.forward, out rayHit, 100))
             {
-                tile.OnTileClicked(tilemap, tilePosition); // 타일 클릭 함수 호출
+                print(rayHit.collider.tag);
+
+                rayHit.collider.TryGetComponent(out Tile tile);
+                if (rayHit.collider.CompareTag("Tile") && tile != null)
+                {
+                    tile.TileClickedInteraction();
+                }
             }
         }
     }
