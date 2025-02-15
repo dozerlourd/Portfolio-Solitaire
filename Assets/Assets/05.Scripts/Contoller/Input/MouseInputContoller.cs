@@ -9,6 +9,8 @@ using UnityEngine.WSA;
 
 public class MouseInputContoller : MonoBehaviour
 {
+    [SerializeField] ControllerManagementSystem controllerManagementSystem;
+
     private void Update()
     {
         if(Mouse.current.leftButton.wasPressedThisFrame)
@@ -16,22 +18,23 @@ public class MouseInputContoller : MonoBehaviour
             Vector3 mousePos = Mouse.current.position.ReadValue();
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mousePos);
 
-            mouseWorldPos += Vector3.forward * 5;
-            //Instantiate(test, mouseWorldPos, Quaternion.identity);
+            Vector2Int tile1Vec2Int = TileInfo.WorldToGrid(controllerManagementSystem.TileMatchingContoller.board[0, 0].transform.position);
+            Vector2Int tile2Vec2Int = TileInfo.WorldToGrid(controllerManagementSystem.TileMatchingContoller.board[0, 1].transform.position);
 
-            Debug.DrawRay(mouseWorldPos, Vector3.forward, Color.red, 100);
+            print(tile1Vec2Int);
+            print(tile2Vec2Int);
 
-            RaycastHit rayHit;
-            if(Physics.Raycast(mouseWorldPos, Vector3.forward, out rayHit, 100))
-            {
-                print(rayHit.collider.tag);
+            controllerManagementSystem.TileMatchingContoller.CanConnect(tile1Vec2Int, tile2Vec2Int);
 
-                rayHit.collider.TryGetComponent(out Tile tile);
-                if (rayHit.collider.CompareTag("Tile") && tile != null)
-                {
-                    tile.TileClickedInteraction();
-                }
-            }
+            //RaycastHit rayHit;
+            //if(Physics.Raycast(mouseWorldPos, Vector3.forward, out rayHit, 100))
+            //{
+            //    rayHit.collider.TryGetComponent(out Tile tile);
+            //    if (rayHit.collider.CompareTag("Tile") && tile != null)
+            //    {
+            //        tile.TileClickedInteraction();
+            //    }
+            //}
         }
     }
 }
