@@ -35,7 +35,7 @@ public class TileGenerateContoller : MonoBehaviour
             for (int y = 0; y < cols; y++)
             {
                 if (!isGenerateEven)
-                    generateTileNum = Random.Range(0, tilePrefabs.Length - 1);
+                    generateTileNum = Random.Range(0, tilePrefabs.Length);
 
                 if (x == 0 || y == 0 || x == rows - 1 || y == cols - 1)
                 {
@@ -53,7 +53,10 @@ public class TileGenerateContoller : MonoBehaviour
             }
         }
 
-        ShuffleBoard(controllerManagementSystem.TileMatchingContoller.board);
+        for (int i = 0; i < 3; i++)
+        {
+            ShuffleBoard(controllerManagementSystem.TileMatchingContoller.board);
+        }
 
         // Place the mixed array in a new location
         for (int x = 1; x < rows - 1; x++) // Excluding the Edge
