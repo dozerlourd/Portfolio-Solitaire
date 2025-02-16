@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class TileMatchingContoller : MonoBehaviour
 {
-
     [SerializeField] ControllerManagementSystem controllerManagementSystem;
-    public GameObject[,] board;  // 패를 관리하는 2D 배열
+    public GameObject[,] board;  //2D Arrangements to Manage Pads
 
-    private int[] dx = { 0, 0, 1, -1 }; // 우, 좌, 하, 상 이동
+    private int[] dx = { 0, 0, 1, -1 }; //Right, left, down, up
     private int[] dy = { 1, -1, 0, 0 };
+
+    [HideInInspector] public Vector2Int startVec2Int;
+    [HideInInspector] public Vector2Int endVec2Int;
+    [HideInInspector] bool setStartInt = false;
 
     private class Node
     {
@@ -25,17 +28,17 @@ public class TileMatchingContoller : MonoBehaviour
 
     public bool CanConnect(Vector2Int start, Vector2Int end)
     {
-        print(board[start.x, start.y].name);
-        print(board[end.x, end.y].name);
+        print(board[start.x, start.y] == null || board[end.x, end.y] == null);
+        print(board[start.x, start.y].name != board[end.x, end.y].name);
 
-        // 패가 존재하는지 체크
+        //Check if the cards exist
         if (board[start.x, start.y] == null || board[end.x, end.y] == null) return false;
-        if (board[start.x, start.y].name != board[end.x, end.y].name) return false; // 같은 패인지 체크
+        if (board[start.x, start.y].name != board[end.x, end.y].name) return false; //Check if they're on the same page
 
         Queue<Node> queue = new Queue<Node>();
         bool[,,] visited = new bool[controllerManagementSystem.TileGenerateContoller.Rows, controllerManagementSystem.TileGenerateContoller.Cols, 4];
 
-        // 4방향 초기 탐색
+        //four-way initial navigation
         for (int i = 0; i < 4; i++)
         {
             int nx = start.x + dx[i];
@@ -47,13 +50,30 @@ public class TileMatchingContoller : MonoBehaviour
             }
         }
 
+        print(queue.Count);
         while (queue.Count > 0)
         {
             Node node = queue.Dequeue();
 
-            // 도착 지점 도달 & 꺾은 횟수 3 이하
+            print(node.turn <= 2);
+            print(node.x == end.x);
+            print(node.y == end.y);
+
+            //Arrival point reached and deflected no more than 3 times
             if (node.x == end.x && node.y == end.y && node.turn <= 2)
             {
+                GameObject startTile = board[start.x, start.y];
+                GameObject endTile = board[end.x, end.y];
+
+                startTile.SetActive(false);
+                endTile.SetActive(false);
+
+                board[start.x, start.y] = null;
+                board[end.x, end.y] = null;
+
+                startVec2Int = new Vector2Int(-1, -1);
+                endVec2Int = new Vector2Int(-1, -1);
+
                 return true;
             }
 
@@ -76,11 +96,30 @@ public class TileMatchingContoller : MonoBehaviour
 
     private bool IsValid(int x, int y, Vector2Int end)
     {
-        // 범위 체크
+        //Range check
         if (x < 0 || x >= controllerManagementSystem.TileGenerateContoller.Rows || y < 0 || y >= controllerManagementSystem.TileGenerateContoller.Cols)
             return false;
 
-        // 빈칸이거나 도착 지점일 경우 이동 가능
+        //Moveable if blank or point of arrival
         return board[x, y] == null || (x == end.x && y == end.y);
+    }
+
+    public void SetMatchingVec2Int(Vector2Int vector2Int)
+    {
+        if(!setStartInt)
+        {
+            startVec2Int = vector2Int;
+            setStartInt = true;
+        }
+        else
+        {
+            endVec2Int = vector2Int;
+
+            //Prevent continuous recognition of tiles at the same point
+            if (endVec2Int == startVec2Int) return;
+            
+            setStartInt = false;
+            CanConnect(startVec2Int, endVec2Int);
+        }
     }
 }
