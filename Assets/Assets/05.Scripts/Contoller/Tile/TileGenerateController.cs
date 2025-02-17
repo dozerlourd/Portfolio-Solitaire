@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class TileGenerateContoller : MonoBehaviour
+public class TileGenerateController : MonoBehaviour
 {
     [SerializeField] ControllerManagementSystem controllerManagementSystem;
 
     [SerializeField] GameObject[] tilePrefabs;
 
-    private int rows = 14;
-    private int cols = 10;
+    private int rows = 18;
+    private int cols = 7;
 
     private bool isGenerateEven = false;
     private int generateTileNum = -1;
@@ -55,7 +55,7 @@ public class TileGenerateContoller : MonoBehaviour
 
         for (int i = 0; i < 3; i++)
         {
-            ShuffleBoard(controllerManagementSystem.TileMatchingContoller.board);
+            controllerManagementSystem.TileShuffleController.ShuffleBoard(controllerManagementSystem.TileMatchingContoller.board);
         }
 
         // Place the mixed array in a new location
@@ -68,46 +68,6 @@ public class TileGenerateContoller : MonoBehaviour
                     controllerManagementSystem.TileMatchingContoller.board[x, y].transform.position =
                         new Vector3(x * TileInfo.TileSizeX, y * TileInfo.TileSizeY, 0);
                 }
-            }
-        }
-    }
-
-    /// <summary>
-    /// Method for Tile Shuffle
-    /// </summary>
-    /// <param name="board"></param>
-    public static void ShuffleBoard(GameObject[,] board)
-    {
-        int rows = board.GetLength(0);
-        int cols = board.GetLength(1);
-
-        // Convert internal tiles only to 1D arra
-        int totalTiles = (rows - 2) * (cols - 2); // Excluding the Edge
-        GameObject[] tempList = new GameObject[totalTiles];
-        int index = 0;
-
-        for (int x = 1; x < rows - 1; x++)
-        {
-            for (int y = 1; y < cols - 1; y++)
-            {
-                tempList[index++] = board[x, y];
-            }
-        }
-
-        // Mixing Tiles
-        for (int i = totalTiles - 1; i > 0; i--)
-        {
-            int randomIndex = Random.Range(0, i + 1);
-            (tempList[i], tempList[randomIndex]) = (tempList[randomIndex], tempList[i]); // Swap
-        }
-
-        // Convert internal tiles back to 2D array
-        index = 0;
-        for (int x = 1; x < rows - 1; x++)
-        {
-            for (int y = 1; y < cols - 1; y++)
-            {
-                board[x, y] = tempList[index++];
             }
         }
     }
