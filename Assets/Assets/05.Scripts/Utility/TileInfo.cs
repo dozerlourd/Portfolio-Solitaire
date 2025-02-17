@@ -17,3 +17,11 @@ public static class TileInfo
         return new Vector2Int(x, y);
     }
 }
+
+public static class InputInfo
+{
+    private static bool isApplyMouseInput = true;
+
+    public static bool IsApplyMouseInput => isApplyMouseInput;
+    public static bool SetApplyMouseInput { set => isApplyMouseInput = value; }
+}

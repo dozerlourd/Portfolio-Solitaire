@@ -13,7 +13,7 @@ public class MouseInputContoller : MonoBehaviour
 
     private void Update()
     {
-        if(Mouse.current.leftButton.wasPressedThisFrame)
+        if(Mouse.current.leftButton.wasPressedThisFrame && InputInfo.IsApplyMouseInput)
         {
             Vector3 mousePos = Mouse.current.position.ReadValue();
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mousePos);
@@ -29,7 +29,7 @@ public class MouseInputContoller : MonoBehaviour
                 {
                     Vector2Int tileVec2Int = TileInfo.WorldToGrid(rayHit.point);
                     controllerManagementSystem.TileMatchingContoller.SetMatchingVec2Int(tileVec2Int);
-                    //tile.TileClickedInteraction();
+                    tile.TileClickedInteraction();
                 }
             }
         }

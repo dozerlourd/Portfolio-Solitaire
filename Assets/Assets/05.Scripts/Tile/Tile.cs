@@ -1,11 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TreeEditor;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
-using UnityEngine.Tilemaps;
-using UnityEngine.UIElements;
+using DG.Tweening;
 
 public class Tile : MonoBehaviour
 {
@@ -16,6 +13,11 @@ public class Tile : MonoBehaviour
 
     public void TileClickedInteraction()
     {
+        ClickAnimation();
+    }
 
+    void ClickAnimation()
+    {
+        transform.DOPunchScale(-Vector3.one, 0.8f, 5, 0.3f);
     }
 }
