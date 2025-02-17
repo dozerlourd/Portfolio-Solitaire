@@ -467,7 +467,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1613916293}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1387003446
 MonoBehaviour:
@@ -559,6 +559,7 @@ Transform:
   m_Children:
   - {fileID: 1613644955}
   - {fileID: 1727169809}
+  - {fileID: 1699031870}
   - {fileID: 1387003445}
   m_Father: {fileID: 0}
   m_RootOrder: 4
@@ -692,6 +693,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1699031868
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1699031870}
+  - component: {fileID: 1699031869}
+  m_Layer: 0
+  m_Name: TileShuffleController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1699031869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1699031868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb6ef35026206614b900e224fcc2cd17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1699031870
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1699031868}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1613916293}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1723292513
 GameObject:
   m_ObjectHideFlags: 0
@@ -736,8 +781,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a922ceb4b796e24596504e8a6ea2328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileMatchingContoller: {fileID: 1613644956}
-  tileGenerateContoller: {fileID: 1727169810}
+  tileMatchingController: {fileID: 1613644956}
+  tileGenerateController: {fileID: 1727169810}
+  tileShuffleController: {fileID: 1699031869}
   mouseInputContoller: {fileID: 1387003446}
 --- !u!1 &1727169808
 GameObject:
@@ -780,7 +826,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1727169808}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78fa1e63ce9e3ad458cc07a20ee99501, type: 3}
+  m_Script: {fileID: 11500000, guid: 9db327a7a7d4d6641993c2d811ddeb01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   controllerManagementSystem: {fileID: 1723292515}
@@ -789,9 +835,12 @@ MonoBehaviour:
   - {fileID: 4526118992481759967, guid: f2d41820c41e95747adda6d236c85ef7, type: 3}
   - {fileID: 6354104205568087511, guid: 85abcebffb2ea344fbb0d3ccdcb1670f, type: 3}
   - {fileID: 1806198850475625144, guid: 40e19e96203f7b44d8faae80e05ff757, type: 3}
+  - {fileID: 8234659625723635743, guid: 9e75f5129e8f5c44cb19a91a9fea8814, type: 3}
   - {fileID: 5209424725404717287, guid: a724f9ad3e5354e4281236cda887e095, type: 3}
   - {fileID: 540196878182881258, guid: c95b7af03a23c3f43866b82e22ed3c43, type: 3}
   - {fileID: 2788680851028870949, guid: 3a788deb20298d2489fea9619d0f765a, type: 3}
   - {fileID: 8604926803866541988, guid: be57ebf1ad35e1c42be2f4f70b3a3a2a, type: 3}
   - {fileID: 7974002376434699350, guid: f12033b771e5b244c975943be27ddb8b, type: 3}
+  - {fileID: 1089390277480462493, guid: 332874f6db481c24c81e593bee3d693f, type: 3}
   - {fileID: 4221511473681982520, guid: a869954ed7277194fb4857285255f0ae, type: 3}
+  - {fileID: 6575411006622365778, guid: 909a6f020c1c5b945b81a38ef708639c, type: 3}
