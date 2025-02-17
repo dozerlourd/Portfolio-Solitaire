@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class ControllerManagementSystem : MonoBehaviour
 {
-    [SerializeField] TileMatchingContoller tileMatchingContoller;
-    [SerializeField] TileGenerateContoller tileGenerateContoller;
+    [SerializeField] TileMatchingController tileMatchingController;
+    [SerializeField] TileGenerateController tileGenerateController;
+    [SerializeField] TileShuffleController tileShuffleController;
     [SerializeField] MouseInputContoller mouseInputContoller;
 
-    public TileMatchingContoller TileMatchingContoller => tileMatchingContoller;
-    public TileGenerateContoller TileGenerateContoller => tileGenerateContoller;
+    public TileMatchingController TileMatchingContoller => tileMatchingController;
+    public TileGenerateController TileGenerateContoller => tileGenerateController;
+    public TileShuffleController TileShuffleController => tileShuffleController;
     public MouseInputContoller MouseInputContoller => mouseInputContoller;
 }
