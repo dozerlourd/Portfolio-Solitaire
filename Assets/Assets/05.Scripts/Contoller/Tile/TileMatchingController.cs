@@ -6,6 +6,8 @@ public class TileMatchingController : MonoBehaviour
 {
     [SerializeField] ControllerManagementSystem controllerManagementSystem;
     public GameObject[,] board;  //2D Arrangements to Manage Pads
+    [SerializeField] AudioClip correctSound;
+    [SerializeField] AudioClip wrongSound;
 
     private int[] dx = { 0, 0, 1, -1 }; //Right, left, down, up
     private int[] dy = { 1, -1, 0, 0 };
@@ -29,8 +31,21 @@ public class TileMatchingController : MonoBehaviour
     public bool CanConnect(Vector2Int start, Vector2Int end)
     {
         //Check if the cards exist
-        if (board[start.x, start.y] == null || board[end.x, end.y] == null) return false;
-        if (board[start.x, start.y].name != board[end.x, end.y].name) return false; //Check if they're on the same page
+        if (board[start.x, start.y] == null || board[end.x, end.y] == null)
+        {
+            controllerManagementSystem.AudioController.VfxSource.Stop();
+            controllerManagementSystem.AudioController.PlayVFXSound(wrongSound, 0.5f);
+
+            return false;
+        }
+
+        if (board[start.x, start.y].name != board[end.x, end.y].name)
+        {
+            controllerManagementSystem.AudioController.VfxSource.Stop();
+            controllerManagementSystem.AudioController.PlayVFXSound(wrongSound, 0.5f);
+
+            return false; //Check if they're on the same page
+        }
 
         Queue<Node> queue = new Queue<Node>();
         bool[,,] visited = new bool[controllerManagementSystem.TileGenerateContoller.Rows, controllerManagementSystem.TileGenerateContoller.Cols, 4];
@@ -52,7 +67,7 @@ public class TileMatchingController : MonoBehaviour
 
     public void SetMatchingVec2Int(Vector2Int vector2Int)
     {
-        if(!setStartInt)
+        if (!setStartInt)
         {
             startVec2Int = vector2Int;
             setStartInt = true;
@@ -63,7 +78,7 @@ public class TileMatchingController : MonoBehaviour
 
             //Prevent continuous recognition of tiles at the same point
             if (endVec2Int == startVec2Int) return;
-            
+
             setStartInt = false;
             CanConnect(startVec2Int, endVec2Int);
         }
@@ -71,6 +86,7 @@ public class TileMatchingController : MonoBehaviour
 
     IEnumerator CanConnectCoroutine(Queue<Node> queue, bool[,,] visited, Vector2Int start, Vector2Int end)
     {
+        isMatching = false;
         //four-way initial navigation
         for (int i = 0; i < 4; i++)
         {
@@ -87,9 +103,9 @@ public class TileMatchingController : MonoBehaviour
         {
             Node node = queue.Dequeue();
 
-            print(node.turn <= 2);
-            print(node.x == end.x);
-            print(node.y == end.y);
+            //print(node.turn <= 2);
+            //print(node.x == end.x);
+            //print(node.y == end.y);
 
             //Arrival point reached and deflected no more than 3 times
             if ((node.x == end.x || node.x == start.x) && (node.y == end.y || node.y == start.y) && node.turn <= 2)
@@ -99,7 +115,12 @@ public class TileMatchingController : MonoBehaviour
                 GameObject startTile = board[start.x, start.y];
                 GameObject endTile = board[end.x, end.y];
 
-                yield return new WaitForSeconds(0.9f);
+                yield return new WaitForSeconds(0.5f);
+
+                controllerManagementSystem.AudioController.ClickSource.Stop();
+                controllerManagementSystem.AudioController.PlayVFXSound(correctSound, 0.5f);
+
+                yield return new WaitForSeconds(0.5f);
 
                 InputInfo.SetApplyMouseInput = true;
 
@@ -112,6 +133,7 @@ public class TileMatchingController : MonoBehaviour
                 startVec2Int = new Vector2Int(-1, -1);
                 endVec2Int = new Vector2Int(-1, -1);
 
+                isMatching = true;
                 //HasAvailableMove();
 
                 break;
@@ -130,5 +152,13 @@ public class TileMatchingController : MonoBehaviour
                 }
             }
         }
+
+        if(!isMatching)
+        {
+            controllerManagementSystem.AudioController.VfxSource.Stop();
+            controllerManagementSystem.AudioController.PlayVFXSound(wrongSound, 0.5f);
+        }
     }
+
+    bool isMatching = false;
 }

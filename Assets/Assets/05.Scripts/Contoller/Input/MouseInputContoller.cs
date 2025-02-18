@@ -10,6 +10,7 @@ using UnityEngine.WSA;
 public class MouseInputContoller : MonoBehaviour
 {
     [SerializeField] ControllerManagementSystem controllerManagementSystem;
+    [SerializeField] AudioClip clickClip;
 
     private void Update()
     {
@@ -29,6 +30,7 @@ public class MouseInputContoller : MonoBehaviour
                 {
                     Vector2Int tileVec2Int = TileInfo.WorldToGrid(rayHit.point);
                     controllerManagementSystem.TileMatchingContoller.SetMatchingVec2Int(tileVec2Int);
+                    controllerManagementSystem.AudioController.PlayClickSound(clickClip);
                     tile.TileClickedInteraction();
                 }
             }
