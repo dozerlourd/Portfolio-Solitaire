@@ -18,6 +18,6 @@ public class Tile : MonoBehaviour
 
     void ClickAnimation()
     {
-        transform.DOPunchScale(-Vector3.one, 0.8f, 5, 0.3f);
+        transform.DOPunchScale(-Vector3.one, 0.5f, 6, 0.3f);
     }
 }
