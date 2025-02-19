@@ -147,7 +147,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 149945884}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.9749155, y: 5.9492483, z: -1.1950865}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -992,7 +992,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controllerManagementSystem: {fileID: 1723292515}
-  correctSound: {fileID: 8300000, guid: d98355def17bb0d479fe30f8a6efb43a, type: 3}
+  correctSound: {fileID: 8300000, guid: 074dc30c45dfbe641b821c1773a0228d, type: 3}
   wrongSound: {fileID: 8300000, guid: 72123784c863baf4cac2be4c1af01747, type: 3}
   startVec2Int: {x: 0, y: 0}
   endVec2Int: {x: 0, y: 0}
@@ -1020,7 +1020,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1613916292}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.3757074, y: 1.064394, z: 0.13532045}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
