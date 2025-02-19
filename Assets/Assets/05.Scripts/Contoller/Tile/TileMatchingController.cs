@@ -36,6 +36,9 @@ public class TileMatchingController : MonoBehaviour
             controllerManagementSystem.AudioController.VfxSource.Stop();
             controllerManagementSystem.AudioController.PlayVFXSound(wrongSound, 0.5f);
 
+            board[start.x, start.y].GetComponent<Tile>().WrongAnimation();
+            board[end.x, end.y].GetComponent<Tile>().WrongAnimation();
+
             return false;
         }
 
@@ -43,6 +46,9 @@ public class TileMatchingController : MonoBehaviour
         {
             controllerManagementSystem.AudioController.VfxSource.Stop();
             controllerManagementSystem.AudioController.PlayVFXSound(wrongSound, 0.5f);
+
+            board[start.x, start.y].GetComponent<Tile>().WrongAnimation();
+            board[end.x, end.y].GetComponent<Tile>().WrongAnimation();
 
             return false; //Check if they're on the same page
         }
@@ -115,12 +121,17 @@ public class TileMatchingController : MonoBehaviour
                 GameObject startTile = board[start.x, start.y];
                 GameObject endTile = board[end.x, end.y];
 
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.3f);
 
                 controllerManagementSystem.AudioController.ClickSource.Stop();
                 controllerManagementSystem.AudioController.PlayVFXSound(correctSound, 0.5f);
 
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.2f);
+
+                startTile.GetComponent<Tile>().CorrectAnimation();
+                endTile.GetComponent<Tile>().CorrectAnimation();
+
+                yield return new WaitForSeconds(0.4f);
 
                 InputInfo.SetApplyMouseInput = true;
 
@@ -134,7 +145,6 @@ public class TileMatchingController : MonoBehaviour
                 endVec2Int = new Vector2Int(-1, -1);
 
                 isMatching = true;
-                //HasAvailableMove();
 
                 break;
             }
