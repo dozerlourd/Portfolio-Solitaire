@@ -7,6 +7,7 @@ using DG.Tweening;
 public class Tile : MonoBehaviour
 {
     [SerializeField] string tileName;
+    bool isClickable = true;
 
     [HideInInspector] public string TileName => tileName;
 
@@ -16,17 +17,22 @@ public class Tile : MonoBehaviour
 
     private void Start()
     {
-        
+        ClickAnimation();
+        isClickable = true;
     }
 
     public void TileClickedInteraction()
     {
-        ClickAnimation();
+        if(isClickable)
+        {
+            StartCoroutine(CheckClickable());
+            ClickAnimation();
+        }
     }
 
     void ClickAnimation()
     {
-        twPunchScale = transform.DOPunchScale(-Vector3.one, 0.5f, 6, 0.3f).SetAutoKill(false);
+        twPunchScale = transform.DOPunchScale(-Vector3.one, 0.5f, 6, 0.3f);
     }
 
     public void CorrectAnimation()
@@ -37,5 +43,12 @@ public class Tile : MonoBehaviour
     public void WrongAnimation()
     {
         twWrongAnim = transform.DOPunchRotation(Vector3.forward * 20, 0.6f, 5, 1);
+    }
+
+    private IEnumerator CheckClickable()
+    {
+        isClickable = false;
+        yield return new WaitForSeconds(0.5f);
+        isClickable = true;
     }
 }
