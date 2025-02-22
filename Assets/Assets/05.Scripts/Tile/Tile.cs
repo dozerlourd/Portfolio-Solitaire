@@ -15,6 +15,8 @@ public class Tile : MonoBehaviour
     Tweener twCorrectAnim;
     Tweener twWrongAnim;
 
+    bool test = true;
+
     private void Start()
     {
         ClickAnimation();
@@ -23,7 +25,9 @@ public class Tile : MonoBehaviour
 
     public void TileClickedInteraction()
     {
-        if(isClickable)
+        if (GameManager.isGameEnd) return;
+
+        if (isClickable)
         {
             StartCoroutine(CheckClickable());
             ClickAnimation();
@@ -50,5 +54,14 @@ public class Tile : MonoBehaviour
         isClickable = false;
         yield return new WaitForSeconds(0.5f);
         isClickable = true;
+    }
+
+    private void Update()
+    {
+        if(GameManager.isGameEnd && test)
+        {
+            CorrectAnimation();
+            test = false;
+        }
     }
 }

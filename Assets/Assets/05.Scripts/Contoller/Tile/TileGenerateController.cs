@@ -18,15 +18,10 @@ public class TileGenerateController : MonoBehaviour
     public int Rows => rows;
     public int Cols => cols;
 
-    void Start()
-    {
-        GenerateTiles();
-    }
-
     /// <summary>
     /// Method for Tile Generation
     /// </summary>
-    void GenerateTiles()
+    public void GenerateTiles()
     {
         controllerManagementSystem.TileMatchingContoller.board = new GameObject[rows, cols];
 

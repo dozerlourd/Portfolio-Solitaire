@@ -14,6 +14,8 @@ public class MouseInputContoller : MonoBehaviour
 
     private void Update()
     {
+        if(GameManager.isGameEnd) return;
+
         if(Mouse.current.leftButton.wasPressedThisFrame && InputInfo.IsApplyMouseInput)
         {
             Vector3 mousePos = Mouse.current.position.ReadValue();

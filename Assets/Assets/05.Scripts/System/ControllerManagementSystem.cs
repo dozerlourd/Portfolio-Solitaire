@@ -9,10 +9,12 @@ public class ControllerManagementSystem : MonoBehaviour
     [SerializeField] TileShuffleController tileShuffleController;
     [SerializeField] MouseInputContoller mouseInputContoller;
     [SerializeField] AudioController audioController;
+    [SerializeField] TimerController timerController;
 
     public TileMatchingController TileMatchingContoller => tileMatchingController;
     public TileGenerateController TileGenerateContoller => tileGenerateController;
     public TileShuffleController TileShuffleController => tileShuffleController;
     public MouseInputContoller MouseInputContoller => mouseInputContoller;
     public AudioController AudioController => audioController;
+    public TimerController TimerController => timerController;
 }
