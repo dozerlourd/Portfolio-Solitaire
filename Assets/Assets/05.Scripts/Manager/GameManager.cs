@@ -8,26 +8,50 @@ public class GameManager : MonoBehaviour
     public static bool isGameEnd = false;
     TimerController timerController;
 
+    [SerializeField] GameObject Image_GameOverText;
+    [SerializeField] GameObject Image_LevelClearText;
+    Coroutine Co_gameRoutine;
+
+    [SerializeField] AudioClip levelClearClip;
+    [SerializeField] AudioClip gameoverClip;
+
     private void Awake()
     {
         isGameEnd = false;
+        Image_GameOverText.SetActive(false);
+        Image_LevelClearText.SetActive(false);
         timerController = controllerManagementSystem.TimerController;
     }
 
     private void Start()
     {
         controllerManagementSystem.TileGenerateContoller.GenerateTiles();
+        Co_gameRoutine = StartCoroutine(GameRoutine());
     }
 
-    private void Update()
+    private IEnumerator GameRoutine()
     {
-        if(controllerManagementSystem.TimerController.CheckHasTimeLimit())
+        while(!controllerManagementSystem.TimerController.CheckHasTimeLimit() && TileManagementController.boardCount != 0)
         {
-            isGameEnd = true;
+            float deltaTime = Time.deltaTime;
+            controllerManagementSystem.TimerController.TimerOneTick(deltaTime);
+            yield return new WaitForSeconds(deltaTime);
+        }
+
+        yield return new WaitForSeconds(0.5f);
+
+        if (TileManagementController.boardCount > 0) //Inspect the board for tiles. Break and return false if one exists
+        {
+            Image_GameOverText.SetActive(true);
+            controllerManagementSystem.AudioController.PlayVFXSound(gameoverClip);
         }
         else
         {
-            controllerManagementSystem.TimerController.TimerOneTick();
+            Image_LevelClearText.SetActive(true);
+            controllerManagementSystem.AudioController.PlayVFXSound(levelClearClip);
         }
+
+        StopCoroutine(Co_gameRoutine);
+        isGameEnd = true;
     }
 }
