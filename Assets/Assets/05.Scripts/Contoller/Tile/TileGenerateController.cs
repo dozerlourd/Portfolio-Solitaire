@@ -18,12 +18,16 @@ public class TileGenerateController : MonoBehaviour
     public int Rows => rows;
     public int Cols => cols;
 
+    TileManagementController tileManagementController;
+
+    private void Awake() => tileManagementController = controllerManagementSystem.TileManagementController;
+
     /// <summary>
     /// Method for Tile Generation
     /// </summary>
     public void GenerateTiles()
     {
-        controllerManagementSystem.TileMatchingContoller.board = new GameObject[rows, cols];
+        tileManagementController.board = new GameObject[rows, cols];
 
         for (int x = 0; x < rows; x++)
         {
@@ -34,23 +38,27 @@ public class TileGenerateController : MonoBehaviour
 
                 if (x == 0 || y == 0 || x == rows - 1 || y == cols - 1)
                 {
-                    Vector3 position = new Vector3(x * TileInfo.TileSizeX, y * TileInfo.TileSizeY, 0);
-                    controllerManagementSystem.TileMatchingContoller.board[x, y] = null;
+                    Vector3 position = new Vector3(x * TileGenerationInfo.TileSizeX, y * TileGenerationInfo.TileSizeY, 0);
+                    tileManagementController.board[x, y] = null;
                 }
                 else
                 {
-                    Vector3 position = new Vector3(x * TileInfo.TileSizeX, y * TileInfo.TileSizeY, 0);
+                    Vector3 position = new Vector3(x * TileGenerationInfo.TileSizeX, y * TileGenerationInfo.TileSizeY, 0);
                     GameObject tile = Instantiate(tilePrefabs[generateTileNum], position, Quaternion.identity);
-                    tile.name = $"Tile_{tile.GetComponent<Tile>().TileName}";
+                    Tile tileComponent = tile.GetComponent<Tile>();
+                    tile.name = $"Tile_{tileComponent.TileName}";
+                    tileComponent.SetAudioController(controllerManagementSystem.AudioController);
                     isGenerateEven = !isGenerateEven;
-                    controllerManagementSystem.TileMatchingContoller.board[x, y] = tile;
+                    tileManagementController.board[x, y] = tile;
+
+                    TileManagementController.boardCount++;
                 }
             }
         }
 
         for (int i = 0; i < 3; i++)
         {
-            controllerManagementSystem.TileShuffleController.ShuffleBoard(controllerManagementSystem.TileMatchingContoller.board);
+            controllerManagementSystem.TileShuffleController.ShuffleBoard(tileManagementController.board);
         }
 
         // Place the mixed array in a new location
@@ -58,10 +66,10 @@ public class TileGenerateController : MonoBehaviour
         {
             for (int y = 1; y < cols - 1; y++)
             {
-                if (controllerManagementSystem.TileMatchingContoller.board[x, y] != null)
+                if (tileManagementController.board[x, y] != null)
                 {
-                    controllerManagementSystem.TileMatchingContoller.board[x, y].transform.position =
-                        new Vector3(x * TileInfo.TileSizeX, y * TileInfo.TileSizeY, 0);
+                    tileManagementController.board[x, y].transform.position =
+                        new Vector3(x * TileGenerationInfo.TileSizeX, y * TileGenerationInfo.TileSizeY, 0);
                 }
             }
         }

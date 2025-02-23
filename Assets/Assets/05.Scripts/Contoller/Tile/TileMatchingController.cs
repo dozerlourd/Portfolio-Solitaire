@@ -5,7 +5,7 @@ using UnityEngine;
 public class TileMatchingController : MonoBehaviour
 {
     [SerializeField] ControllerManagementSystem controllerManagementSystem;
-    public GameObject[,] board;  //2D Arrangements to Manage Pads
+    
     [SerializeField] AudioClip correctSound;
     [SerializeField] AudioClip wrongSound;
 
@@ -15,6 +15,10 @@ public class TileMatchingController : MonoBehaviour
     [HideInInspector] public Vector2Int startVec2Int;
     [HideInInspector] public Vector2Int endVec2Int;
     [HideInInspector] bool setStartInt = false;
+
+    TileManagementController tileManagementController;
+
+    private void Awake() => tileManagementController = controllerManagementSystem.TileManagementController;
 
     private class Node
     {
@@ -31,24 +35,24 @@ public class TileMatchingController : MonoBehaviour
     public bool CanConnect(Vector2Int start, Vector2Int end)
     {
         //Check if the cards exist
-        if (board[start.x, start.y] == null || board[end.x, end.y] == null)
+        if (tileManagementController.board[start.x, start.y] == null || tileManagementController.board[end.x, end.y] == null)
         {
             controllerManagementSystem.AudioController.VfxSource.Stop();
             controllerManagementSystem.AudioController.PlayVFXSound(wrongSound, 0.5f);
 
-            board[start.x, start.y].GetComponent<Tile>().WrongAnimation();
-            board[end.x, end.y].GetComponent<Tile>().WrongAnimation();
+            tileManagementController.board[start.x, start.y].GetComponent<Tile>().WrongAnimation();
+            tileManagementController.board[end.x, end.y].GetComponent<Tile>().WrongAnimation();
 
             return false;
         }
 
-        if (board[start.x, start.y].name != board[end.x, end.y].name)
+        if (tileManagementController.board[start.x, start.y].name != tileManagementController.board[end.x, end.y].name)
         {
             controllerManagementSystem.AudioController.VfxSource.Stop();
             controllerManagementSystem.AudioController.PlayVFXSound(wrongSound, 0.5f);
 
-            board[start.x, start.y].GetComponent<Tile>().WrongAnimation();
-            board[end.x, end.y].GetComponent<Tile>().WrongAnimation();
+            tileManagementController.board[start.x, start.y].GetComponent<Tile>().WrongAnimation();
+            tileManagementController.board[end.x, end.y].GetComponent<Tile>().WrongAnimation();
 
             return false; //Check if they're on the same page
         }
@@ -68,7 +72,7 @@ public class TileMatchingController : MonoBehaviour
             return false;
 
         //Moveable if blank or point of arrival
-        return board[x, y] == null || (x == end.x && y == end.y);
+        return tileManagementController.board[x, y] == null || (x == end.x && y == end.y);
     }
 
     public void SetMatchingVec2Int(Vector2Int vector2Int)
@@ -109,17 +113,13 @@ public class TileMatchingController : MonoBehaviour
         {
             Node node = queue.Dequeue();
 
-            //print(node.turn <= 2);
-            //print(node.x == end.x);
-            //print(node.y == end.y);
-
             //Arrival point reached and deflected no more than 3 times
             if ((node.x == end.x || node.x == start.x) && (node.y == end.y || node.y == start.y) && node.turn <= 2)
             {
                 InputInfo.SetApplyMouseInput = false;
 
-                GameObject startTile = board[start.x, start.y];
-                GameObject endTile = board[end.x, end.y];
+                GameObject startTile = tileManagementController.board[start.x, start.y];
+                GameObject endTile = tileManagementController.board[end.x, end.y];
 
                 yield return new WaitForSeconds(0.3f);
 
@@ -129,7 +129,10 @@ public class TileMatchingController : MonoBehaviour
                 yield return new WaitForSeconds(0.2f);
 
                 startTile.GetComponent<Tile>().CorrectAnimation();
+                startTile.GetComponent<Tile>().CorrectBoard();
+
                 endTile.GetComponent<Tile>().CorrectAnimation();
+                endTile.GetComponent<Tile>().CorrectBoard();
 
                 yield return new WaitForSeconds(0.4f);
 
@@ -138,8 +141,8 @@ public class TileMatchingController : MonoBehaviour
                 startTile.SetActive(false);
                 endTile.SetActive(false);
 
-                board[start.x, start.y] = null;
-                board[end.x, end.y] = null;
+                tileManagementController.board[start.x, start.y] = null;
+                tileManagementController.board[end.x, end.y] = null;
 
                 startVec2Int = new Vector2Int(-1, -1);
                 endVec2Int = new Vector2Int(-1, -1);
@@ -163,12 +166,24 @@ public class TileMatchingController : MonoBehaviour
             }
         }
 
-        if(!isMatching)
+        //Failed sound output if matching fails
+        if (!isMatching)
         {
             controllerManagementSystem.AudioController.VfxSource.Stop();
             controllerManagementSystem.AudioController.PlayVFXSound(wrongSound, 0.5f);
+
+            if (HasMatchingPair() == false)
+            {
+                controllerManagementSystem.TileShuffleController.ShuffleBoard(tileManagementController.board);
+            }
         }
     }
 
     bool isMatching = false;
+
+    //구현하려다 시간 너무 오래 잡아먹어서 일단 패스(I tried to implement it, but I ate too much time, so I passed it first)
+    public bool HasMatchingPair()
+    {
+        return true;
+    }
 }

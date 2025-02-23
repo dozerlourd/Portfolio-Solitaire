@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class TileInfo
+public static class TileGenerationInfo
 {
     private static float tileSizeX = 0.7714f;
     private static float tileSizeY = 1f;
