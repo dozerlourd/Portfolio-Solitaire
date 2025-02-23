@@ -2001,9 +2001,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1727169809}
   - component: {fileID: 1727169810}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TileGenerateController
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2037,19 +2037,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controllerManagementSystem: {fileID: 1723292515}
   tilePrefabs:
-  - {fileID: 1683492424939801822, guid: cd876f082091d434ca6028df74928894, type: 3}
-  - {fileID: 4526118992481759967, guid: f2d41820c41e95747adda6d236c85ef7, type: 3}
-  - {fileID: 6354104205568087511, guid: 85abcebffb2ea344fbb0d3ccdcb1670f, type: 3}
-  - {fileID: 1806198850475625144, guid: 40e19e96203f7b44d8faae80e05ff757, type: 3}
-  - {fileID: 8234659625723635743, guid: 9e75f5129e8f5c44cb19a91a9fea8814, type: 3}
-  - {fileID: 5209424725404717287, guid: a724f9ad3e5354e4281236cda887e095, type: 3}
-  - {fileID: 540196878182881258, guid: c95b7af03a23c3f43866b82e22ed3c43, type: 3}
-  - {fileID: 2788680851028870949, guid: 3a788deb20298d2489fea9619d0f765a, type: 3}
-  - {fileID: 8604926803866541988, guid: be57ebf1ad35e1c42be2f4f70b3a3a2a, type: 3}
-  - {fileID: 7974002376434699350, guid: f12033b771e5b244c975943be27ddb8b, type: 3}
-  - {fileID: 1089390277480462493, guid: 332874f6db481c24c81e593bee3d693f, type: 3}
-  - {fileID: 4221511473681982520, guid: a869954ed7277194fb4857285255f0ae, type: 3}
-  - {fileID: 6575411006622365778, guid: 909a6f020c1c5b945b81a38ef708639c, type: 3}
+  - {fileID: 1875197190651255672, guid: eb9f1b608bac1d647ae01ad5332428f6, type: 3}
+  - {fileID: 1875197190651255672, guid: 92b699a61d8468f49a1f8ee104f4c965, type: 3}
+  - {fileID: 1875197190651255672, guid: 085b5e25dd23ea043a175ac19d5c7477, type: 3}
+  - {fileID: 1875197190651255672, guid: de1f5a2f5255bbc43b85419c32431edb, type: 3}
+  - {fileID: 1875197190651255672, guid: 37f99bfc3a8f4db4aa353e045327c04f, type: 3}
+  - {fileID: 1875197190651255672, guid: c8f1b0bc46bcb3942b612a5a6c8a4e47, type: 3}
+  - {fileID: 1875197190651255672, guid: 2d6e63976ed251145a3b50009243fdbd, type: 3}
+  - {fileID: 1875197190651255672, guid: a6939cb710ee6c74192adbf2f13a93ef, type: 3}
+  - {fileID: 1875197190651255672, guid: fc4aa058366e9814882c28435918de1b, type: 3}
+  - {fileID: 1875197190651255672, guid: e106e65811ced4741bc362fba2eece96, type: 3}
+  - {fileID: 1875197190651255672, guid: b51a2e43aa8c0074484144c84b5b40a8, type: 3}
+  - {fileID: 1875197190651255672, guid: 695e8414754da3149930278c85d170e0, type: 3}
+  - {fileID: 1875197190651255672, guid: 578041ee7768a454cb07463d73677774, type: 3}
 --- !u!1 &2052557299
 GameObject:
   m_ObjectHideFlags: 0
