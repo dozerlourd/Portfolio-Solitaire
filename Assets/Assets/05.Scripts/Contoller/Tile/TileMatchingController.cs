@@ -40,8 +40,14 @@ public class TileMatchingController : MonoBehaviour
             controllerManagementSystem.AudioController.VfxSource.Stop();
             controllerManagementSystem.AudioController.PlayVFXSound(wrongSound, 0.5f);
 
-            tileManagementController.board[start.x, start.y].GetComponent<Tile>().WrongAnimation();
-            tileManagementController.board[end.x, end.y].GetComponent<Tile>().WrongAnimation();
+            Tile startWrongTile = tileManagementController.board[start.x, start.y].GetComponent<Tile>();
+            Tile endWrongTile = tileManagementController.board[end.x, end.y].GetComponent<Tile>();
+
+            startWrongTile.ResetTileClicked();
+            endWrongTile.ResetTileClicked();
+
+            startWrongTile.WrongAnimation();
+            endWrongTile.WrongAnimation();
 
             return false;
         }
@@ -51,8 +57,14 @@ public class TileMatchingController : MonoBehaviour
             controllerManagementSystem.AudioController.VfxSource.Stop();
             controllerManagementSystem.AudioController.PlayVFXSound(wrongSound, 0.5f);
 
-            tileManagementController.board[start.x, start.y].GetComponent<Tile>().WrongAnimation();
-            tileManagementController.board[end.x, end.y].GetComponent<Tile>().WrongAnimation();
+            Tile startWrongTile = tileManagementController.board[start.x, start.y].GetComponent<Tile>();
+            Tile endWrongTile = tileManagementController.board[end.x, end.y].GetComponent<Tile>();
+
+            startWrongTile.ResetTileClicked();
+            endWrongTile.ResetTileClicked();
+
+            startWrongTile.WrongAnimation();
+            endWrongTile.WrongAnimation();
 
             return false; //Check if they're on the same page
         }

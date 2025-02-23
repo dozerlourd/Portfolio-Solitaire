@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(deltaTime);
         }
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.25f);
 
         if (TileManagementController.boardCount > 0) //Inspect the board for tiles. Break and return false if one exists
         {

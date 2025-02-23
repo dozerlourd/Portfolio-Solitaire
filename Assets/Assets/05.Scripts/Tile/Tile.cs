@@ -3,33 +3,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UIElements;
 
 public class Tile : MonoBehaviour
 {
+    [SerializeField] Texture2D tileImage;
     [SerializeField] string tileName;
     bool isClickable = true;
 
     [HideInInspector] public string TileName => tileName;
     AudioController audioController;
 
+    Material mat;
+
     Tweener twPunchScale;
     Tweener twCorrectAnim;
     Tweener twWrongAnim;
 
-    bool test = true;
+    bool wasPlayedEndAnimation = false;
+
+    private void Awake() => mat = GetComponent<MeshRenderer>().material;
 
     private void Start()
     {
         ClickAnimation();
         isClickable = true;
+        SetTileTexture();
     }
 
     private void Update()
     {
-        if (GameManager.isGameEnd && test)
+        if (GameManager.isGameEnd && !wasPlayedEndAnimation)
         {
             CorrectAnimation();
-            test = false;
+            wasPlayedEndAnimation = true;
         }
     }
 
@@ -47,7 +54,7 @@ public class Tile : MonoBehaviour
 
     void ClickAnimation()
     {
-        twPunchScale = transform.DOPunchScale(-Vector3.one, 0.5f, 6, 0.3f);
+        twPunchScale = transform.DOPunchScale(-Vector3.one * 0.7f, 0.5f, 6, 0.3f);
     }
 
     public void CorrectBoard()
@@ -68,9 +75,17 @@ public class Tile : MonoBehaviour
     private IEnumerator CheckClickable()
     {
         isClickable = false;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1);
         isClickable = true;
+        mat.SetFloat("_IsTileClicked", 1);
+    }
+
+    public void ResetTileClicked()
+    {
+        mat.SetFloat("_IsTileClicked", 0);
     }
 
     public void SetAudioController(AudioController _audioController) => audioController = _audioController;
+
+    void SetTileTexture() => mat.SetTexture("_MainTex", tileImage);
 }
