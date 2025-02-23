@@ -8,19 +8,15 @@ public class AudioController : MonoBehaviour
     [SerializeField] AudioSource clickSource;
     [SerializeField] AudioSource vfxSource;
 
+    [SerializeField] AudioClip clickClip;
+
     public AudioSource ClickSource => clickSource;
     public AudioSource VfxSource => vfxSource;
 
-    public void PlayClickSound(AudioClip clip, float vol = 1)
+    public void PlayClickSound(float vol = 1)
     {
         clickSource.volume = vol;
-        clickSource.PlayOneShot(clip);
-    }
-
-    public void PlayClickSound(AudioClip[] clip, float vol = 1)
-    {
-        clickSource.volume = vol;
-        clickSource.PlayOneShot(clip[Random.Range(0, clip.Length)]);
+        clickSource.PlayOneShot(clickClip);
     }
 
     public void PlayVFXSound(AudioClip clip, float vol = 1)

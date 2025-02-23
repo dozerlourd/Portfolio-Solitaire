@@ -10,6 +10,7 @@ public class Tile : MonoBehaviour
     bool isClickable = true;
 
     [HideInInspector] public string TileName => tileName;
+    AudioController audioController;
 
     Tweener twPunchScale;
     Tweener twCorrectAnim;
@@ -23,6 +24,15 @@ public class Tile : MonoBehaviour
         isClickable = true;
     }
 
+    private void Update()
+    {
+        if (GameManager.isGameEnd && test)
+        {
+            CorrectAnimation();
+            test = false;
+        }
+    }
+
     public void TileClickedInteraction()
     {
         if (GameManager.isGameEnd) return;
@@ -30,6 +40,7 @@ public class Tile : MonoBehaviour
         if (isClickable)
         {
             StartCoroutine(CheckClickable());
+            audioController.PlayClickSound();
             ClickAnimation();
         }
     }
@@ -37,6 +48,11 @@ public class Tile : MonoBehaviour
     void ClickAnimation()
     {
         twPunchScale = transform.DOPunchScale(-Vector3.one, 0.5f, 6, 0.3f);
+    }
+
+    public void CorrectBoard()
+    {
+        TileManagementController.boardCount--;
     }
 
     public void CorrectAnimation()
@@ -56,12 +72,5 @@ public class Tile : MonoBehaviour
         isClickable = true;
     }
 
-    private void Update()
-    {
-        if(GameManager.isGameEnd && test)
-        {
-            CorrectAnimation();
-            test = false;
-        }
-    }
+    public void SetAudioController(AudioController _audioController) => audioController = _audioController;
 }

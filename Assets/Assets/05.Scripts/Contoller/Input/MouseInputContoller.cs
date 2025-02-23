@@ -30,9 +30,8 @@ public class MouseInputContoller : MonoBehaviour
                 rayHit.collider.TryGetComponent(out Tile tile);
                 if (rayHit.collider.CompareTag("Tile") && tile != null)
                 {
-                    Vector2Int tileVec2Int = TileInfo.WorldToGrid(rayHit.point);
+                    Vector2Int tileVec2Int = TileGenerationInfo.WorldToGrid(rayHit.point);
                     controllerManagementSystem.TileMatchingContoller.SetMatchingVec2Int(tileVec2Int);
-                    controllerManagementSystem.AudioController.PlayClickSound(clickClip);
                     tile.TileClickedInteraction();
                 }
             }
