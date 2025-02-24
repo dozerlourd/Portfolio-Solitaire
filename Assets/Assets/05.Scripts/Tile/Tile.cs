@@ -22,11 +22,17 @@ public class Tile : MonoBehaviour
 
     bool wasPlayedEndAnimation = false;
 
+    Quaternion originQuater;
+    Vector3 originScale;
+
     private void Awake() => mat = GetComponent<MeshRenderer>().material;
 
     private void Start()
     {
-        ClickAnimation();
+        originQuater = Quaternion.identity;
+        originScale = transform.localScale;
+
+        ClickAnimation(); //Spawn animation
         isClickable = true;
         SetTileTexture();
     }
@@ -78,6 +84,8 @@ public class Tile : MonoBehaviour
         yield return new WaitForSeconds(1);
         isClickable = true;
         mat.SetFloat("_IsTileClicked", 1);
+
+        ResetTransform();
     }
 
     public void ResetTileClicked()
@@ -88,4 +96,14 @@ public class Tile : MonoBehaviour
     public void SetAudioController(AudioController _audioController) => audioController = _audioController;
 
     void SetTileTexture() => mat.SetTexture("_MainTex", tileImage);
+
+    void ResetTransform()
+    {
+        twPunchScale.Pause();
+        twCorrectAnim.Pause();
+        twWrongAnim.Pause();
+
+        transform.DORotateQuaternion(originQuater, 0.2f);
+        transform.DOScale(originScale, 0.2f);
+    }
 }
