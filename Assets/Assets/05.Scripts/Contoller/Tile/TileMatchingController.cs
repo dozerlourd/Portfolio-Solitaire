@@ -108,7 +108,14 @@ public class TileMatchingController : MonoBehaviour
 
     IEnumerator CanConnectCoroutine(Queue<Node> queue, bool[,,] visited, Vector2Int start, Vector2Int end)
     {
+        GameObject startTile = tileManagementController.board[start.x, start.y];
+        GameObject endTile = tileManagementController.board[end.x, end.y];
+
+        Tile startTileComponent = startTile.GetComponent<Tile>();
+        Tile endTileComponent = endTile.GetComponent<Tile>();
+
         isMatching = false;
+
         //four-way initial navigation
         for (int i = 0; i < 4; i++)
         {
@@ -121,22 +128,24 @@ public class TileMatchingController : MonoBehaviour
             }
         }
 
+        if(queue.Count == 0)
+        {
+            startTileComponent.WrongAnimation();
+            startTileComponent.ResetTileClicked();
+
+            endTileComponent.WrongAnimation();
+            endTileComponent.ResetTileClicked();
+        }
+
         while (queue.Count > 0)
         {
             Node node = queue.Dequeue();
-
-            GameObject startTile = tileManagementController.board[start.x, start.y];
-            GameObject endTile = tileManagementController.board[end.x, end.y];
-
-            Tile startTileComponent = startTile.GetComponent<Tile>();
-            Tile endTileComponent = endTile.GetComponent<Tile>();
 
             //Arrival point reached and deflected no more than 3 times
             if ((node.x == end.x || node.x == start.x) && (node.y == end.y || node.y == start.y) && node.turn <= 2)
             {
                 InputInfo.SetApplyMouseInput = false;
 
-                
 
                 yield return new WaitForSeconds(0.3f);
 
@@ -187,13 +196,6 @@ public class TileMatchingController : MonoBehaviour
                     visited[nx, ny, i] = true;
                 }
             }
-
-            //Tile matching fails
-            startTileComponent.WrongAnimation();
-            startTileComponent.ResetTileClicked();
-
-            endTileComponent.WrongAnimation();
-            endTileComponent.ResetTileClicked();
         }
 
         //Failed sound output if matching fails
@@ -201,6 +203,13 @@ public class TileMatchingController : MonoBehaviour
         {
             controllerManagementSystem.AudioController.VfxSource.Stop();
             controllerManagementSystem.AudioController.PlayVFXSound(wrongSound, 0.5f);
+
+            //Tile matching fails
+            startTileComponent.WrongAnimation();
+            startTileComponent.ResetTileClicked();
+
+            endTileComponent.WrongAnimation();
+            endTileComponent.ResetTileClicked();
 
             if (HasMatchingPair() == false)
             {
