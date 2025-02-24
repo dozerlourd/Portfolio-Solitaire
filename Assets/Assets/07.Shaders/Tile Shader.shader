@@ -4,8 +4,9 @@ Shader "Custom/Tile Shader"
     {
         _MainTex ("Texture", 2D) = "white" {}
         _IsTileClicked ("IsTileClicked", float) = 0
-        _OutlineThickness ("OutlineThickness", float) = 0
-        _OutlineColor ("OutlineColor", Color) = (1,1,1,1)
+
+        _GlowColor ("Glow Color", Color) = (1, 0.5, 0, 1)
+        _GlowIntensity ("GlowIntensity", Range(1, 10)) = 1
     }
     SubShader
     {
@@ -35,8 +36,9 @@ Shader "Custom/Tile Shader"
             sampler2D _MainTex;
             float4 _MainTex_ST;
             float _IsTileClicked;
-            float _OutlineThickness;
-            float4 _OutlineColor;
+
+            float4 _GlowColor;
+            float _GlowIntensity;
 
             v2f vert (appdata v)
             {
@@ -49,19 +51,16 @@ Shader "Custom/Tile Shader"
             fixed4 frag (v2f i) : SV_Target
             {
                 fixed4 col = tex2D(_MainTex, i.uv);
-                float t = 0;
+                float t = sin(_Time.w + 1) * 0.5 + 1;
                 
-                float outline = tex2D(_MainTex, i.uv + float2(_OutlineThickness, 0)).a +
-                                tex2D(_MainTex, i.uv - float2(_OutlineThickness, 0)).a +
-                                tex2D(_MainTex, i.uv + float2(0, _OutlineThickness)).a +
-                                tex2D(_MainTex, i.uv - float2(0, _OutlineThickness)).a; 
-
-                 if (outline > 0.0 && col.a == 0.0 && _IsTileClicked)
+                fixed4 glow = fixed4(0,0,0,0);
+                if(_IsTileClicked)
                 {
-                    return _OutlineColor; // 아웃라인 색상 적용
+                    float glowFactor = col.r * _GlowIntensity * t;
+                    glow = _GlowColor * glowFactor;
                 }
 
-                return col;
+                return col+ glow;
             }
             ENDCG
         }

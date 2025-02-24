@@ -81,17 +81,14 @@ public class Tile : MonoBehaviour
     private IEnumerator CheckClickable()
     {
         isClickable = false;
+        mat.SetFloat("_IsTileClicked", 1);
         yield return new WaitForSeconds(1);
         isClickable = true;
-        mat.SetFloat("_IsTileClicked", 1);
 
         ResetTransform();
     }
 
-    public void ResetTileClicked()
-    {
-        mat.SetFloat("_IsTileClicked", 0);
-    }
+    public void ResetTileClicked() => mat.SetFloat("_IsTileClicked", 0);
 
     public void SetAudioController(AudioController _audioController) => audioController = _audioController;
 

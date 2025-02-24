@@ -125,13 +125,18 @@ public class TileMatchingController : MonoBehaviour
         {
             Node node = queue.Dequeue();
 
+            GameObject startTile = tileManagementController.board[start.x, start.y];
+            GameObject endTile = tileManagementController.board[end.x, end.y];
+
+            Tile startTileComponent = startTile.GetComponent<Tile>();
+            Tile endTileComponent = endTile.GetComponent<Tile>();
+
             //Arrival point reached and deflected no more than 3 times
             if ((node.x == end.x || node.x == start.x) && (node.y == end.y || node.y == start.y) && node.turn <= 2)
             {
                 InputInfo.SetApplyMouseInput = false;
 
-                GameObject startTile = tileManagementController.board[start.x, start.y];
-                GameObject endTile = tileManagementController.board[end.x, end.y];
+                
 
                 yield return new WaitForSeconds(0.3f);
 
@@ -140,15 +145,21 @@ public class TileMatchingController : MonoBehaviour
 
                 yield return new WaitForSeconds(0.2f);
 
-                startTile.GetComponent<Tile>().CorrectAnimation();
-                startTile.GetComponent<Tile>().CorrectBoard();
+                startTileComponent = startTile.GetComponent<Tile>();
+                endTileComponent = endTile.GetComponent<Tile>();
 
-                endTile.GetComponent<Tile>().CorrectAnimation();
-                endTile.GetComponent<Tile>().CorrectBoard();
+                startTileComponent.CorrectAnimation();
+                startTileComponent.CorrectBoard();
+
+                endTileComponent.CorrectAnimation();
+                endTileComponent.CorrectBoard();
 
                 yield return new WaitForSeconds(0.4f);
 
                 InputInfo.SetApplyMouseInput = true;
+
+                startTileComponent.ResetTileClicked();
+                endTileComponent.ResetTileClicked();
 
                 startTile.SetActive(false);
                 endTile.SetActive(false);
@@ -176,6 +187,13 @@ public class TileMatchingController : MonoBehaviour
                     visited[nx, ny, i] = true;
                 }
             }
+
+            //Tile matching fails
+            startTileComponent.WrongAnimation();
+            startTileComponent.ResetTileClicked();
+
+            endTileComponent.WrongAnimation();
+            endTileComponent.ResetTileClicked();
         }
 
         //Failed sound output if matching fails
