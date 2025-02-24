@@ -61,10 +61,10 @@ public class Tile : MonoBehaviour
 
     void ClickAnimation()
     {
-        twPunchScale = transform.DOPunchScale(-Vector3.one * 0.7f, 0.5f, 6, 0.3f);
+        twPunchScale = transform.DOPunchScale(-transform.localScale * 0.7f, 0.5f, 6, 0.3f);
     }
 
-    public void CorrectBoard()
+    public void CorrectBoardCount()
     {
         TileManagementController.boardCount--;
     }

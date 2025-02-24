@@ -35,7 +35,8 @@ public class TileMatchingController : MonoBehaviour
     public bool CanConnect(Vector2Int start, Vector2Int end)
     {
         //Check if the cards exist
-        if (tileManagementController.board[start.x, start.y] == null || tileManagementController.board[end.x, end.y] == null)
+        if ((tileManagementController.board[start.x, start.y] == null || tileManagementController.board[end.x, end.y] == null) ||
+            tileManagementController.board[start.x, start.y].name != tileManagementController.board[end.x, end.y].name)
         {
             controllerManagementSystem.AudioController.VfxSource.Stop();
             controllerManagementSystem.AudioController.PlayVFXSound(wrongSound, 0.5f);
@@ -43,30 +44,9 @@ public class TileMatchingController : MonoBehaviour
             Tile startWrongTile = tileManagementController.board[start.x, start.y].GetComponent<Tile>();
             Tile endWrongTile = tileManagementController.board[end.x, end.y].GetComponent<Tile>();
 
-            startWrongTile.ResetTileClicked();
-            endWrongTile.ResetTileClicked();
-
-            startWrongTile.WrongAnimation();
-            endWrongTile.WrongAnimation();
+            PlayWrongLogic(startWrongTile, endWrongTile);
 
             return false;
-        }
-
-        if (tileManagementController.board[start.x, start.y].name != tileManagementController.board[end.x, end.y].name)
-        {
-            controllerManagementSystem.AudioController.VfxSource.Stop();
-            controllerManagementSystem.AudioController.PlayVFXSound(wrongSound, 0.5f);
-
-            Tile startWrongTile = tileManagementController.board[start.x, start.y].GetComponent<Tile>();
-            Tile endWrongTile = tileManagementController.board[end.x, end.y].GetComponent<Tile>();
-
-            startWrongTile.ResetTileClicked();
-            endWrongTile.ResetTileClicked();
-
-            startWrongTile.WrongAnimation();
-            endWrongTile.WrongAnimation();
-
-            return false; //Check if they're on the same page
         }
 
         Queue<Node> queue = new Queue<Node>();
@@ -146,7 +126,6 @@ public class TileMatchingController : MonoBehaviour
             {
                 InputInfo.SetApplyMouseInput = false;
 
-
                 yield return new WaitForSeconds(0.3f);
 
                 controllerManagementSystem.AudioController.ClickSource.Stop();
@@ -154,17 +133,10 @@ public class TileMatchingController : MonoBehaviour
 
                 yield return new WaitForSeconds(0.2f);
 
-                StopCoroutine(startTileComponent.clickRoutine);
-                StopCoroutine(endTileComponent.clickRoutine);
+                PlayCorrectLogic(startTileComponent, endTileComponent);
 
-                startTileComponent = startTile.GetComponent<Tile>();
-                endTileComponent = endTile.GetComponent<Tile>();
-
-                startTileComponent.CorrectAnimation();
-                startTileComponent.CorrectBoard();
-
-                endTileComponent.CorrectAnimation();
-                endTileComponent.CorrectBoard();
+                startTileComponent.CorrectBoardCount();
+                endTileComponent.CorrectBoardCount();
 
                 yield return new WaitForSeconds(0.4f);
 
@@ -207,12 +179,7 @@ public class TileMatchingController : MonoBehaviour
             controllerManagementSystem.AudioController.VfxSource.Stop();
             controllerManagementSystem.AudioController.PlayVFXSound(wrongSound, 0.5f);
 
-            //Tile matching fails
-            startTileComponent.WrongAnimation();
-            startTileComponent.ResetTileClicked();
-
-            endTileComponent.WrongAnimation();
-            endTileComponent.ResetTileClicked();
+            PlayWrongLogic(startTileComponent, endTileComponent);
 
             if (HasMatchingPair() == false)
             {
@@ -227,5 +194,34 @@ public class TileMatchingController : MonoBehaviour
     public bool HasMatchingPair()
     {
         return true;
+    }
+
+    /// <summary>
+    /// If tile matching fails
+    /// </summary>
+    void PlayWrongLogic(Tile startTile, Tile endTile)
+    {
+        InputInfo.SetApplyMouseInput = true;
+
+        startTile.WrongAnimation();
+        startTile.ResetTileClicked();
+
+        endTile.WrongAnimation();
+        endTile.ResetTileClicked();
+    }
+
+    /// <summary>
+    /// If tile matching successes
+    /// </summary>
+    void PlayCorrectLogic(Tile startTile, Tile endTile)
+    {
+        startTile.StopCoroutine(startTile.clickRoutine);
+        endTile.StopCoroutine(endTile.clickRoutine);
+
+        startTile = startTile.GetComponent<Tile>();
+        endTile = endTile.GetComponent<Tile>();
+
+        startTile.CorrectAnimation();
+        endTile.CorrectAnimation();
     }
 }
