@@ -7,23 +7,24 @@ using UnityEngine.UIElements;
 
 public class Tile : MonoBehaviour
 {
+    [HideInInspector] public string TileName => tileName;
+    public Coroutine clickRoutine;
+
     [SerializeField] Texture2D tileImage;
     [SerializeField] string tileName;
-    bool isClickable = true;
 
-    [HideInInspector] public string TileName => tileName;
     AudioController audioController;
-
     Material mat;
+
+    Quaternion originQuater;
+    Vector3 originScale;
+
+    bool wasPlayedEndAnimation = false;
+    bool isClickable = true;
 
     Tweener twPunchScale;
     Tweener twCorrectAnim;
     Tweener twWrongAnim;
-
-    bool wasPlayedEndAnimation = false;
-
-    Quaternion originQuater;
-    Vector3 originScale;
 
     private void Awake() => mat = GetComponent<MeshRenderer>().material;
 
@@ -52,7 +53,7 @@ public class Tile : MonoBehaviour
 
         if (isClickable)
         {
-            StartCoroutine(CheckClickable());
+            clickRoutine = StartCoroutine(CheckClickable());
             audioController.PlayClickSound();
             ClickAnimation();
         }
