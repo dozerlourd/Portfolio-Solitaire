@@ -4,8 +4,8 @@ using UnityEngine;
 
 public static class TileGenerationInfo
 {
-    private static float tileSizeX = 0.7714f;
-    private static float tileSizeY = 1f;
+    private static float tileSizeX = 0.3857422f;
+    private static float tileSizeY = 0.5f;
 
     public static float TileSizeX => tileSizeX;
     public static float TileSizeY => tileSizeY;
