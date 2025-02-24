@@ -154,6 +154,9 @@ public class TileMatchingController : MonoBehaviour
 
                 yield return new WaitForSeconds(0.2f);
 
+                StopCoroutine(startTileComponent.clickRoutine);
+                StopCoroutine(endTileComponent.clickRoutine);
+
                 startTileComponent = startTile.GetComponent<Tile>();
                 endTileComponent = endTile.GetComponent<Tile>();
 
