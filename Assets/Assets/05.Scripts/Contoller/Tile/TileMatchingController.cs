@@ -5,7 +5,9 @@ using UnityEngine;
 public class TileMatchingController : MonoBehaviour
 {
     [SerializeField] ControllerManagementSystem controllerManagementSystem;
-    
+
+    [SerializeField] EffectController effectController;
+
     [SerializeField] AudioClip correctSound;
     [SerializeField] AudioClip wrongSound;
 
@@ -133,6 +135,15 @@ public class TileMatchingController : MonoBehaviour
 
                 yield return new WaitForSeconds(0.2f);
 
+                GameObject rainbowGlowEffect_start = effectController.RainbowGlowEffects.PopObject();
+                GameObject rainbowGlowEffect_end = effectController.RainbowGlowEffects.PopObject();
+
+                rainbowGlowEffect_start.transform.position = startTileComponent.transform.position;
+                rainbowGlowEffect_end.transform.position = endTileComponent.transform.position;
+
+                rainbowGlowEffect_start.SetActive(true);
+                rainbowGlowEffect_end.SetActive(true);
+
                 PlayCorrectLogic(startTileComponent, endTileComponent);
 
                 startTileComponent.CorrectBoardCount();
@@ -201,8 +212,6 @@ public class TileMatchingController : MonoBehaviour
     /// </summary>
     void PlayWrongLogic(Tile startTile, Tile endTile)
     {
-        InputInfo.SetApplyMouseInput = true;
-
         startTile.WrongAnimation();
         startTile.ResetTileClicked();
 

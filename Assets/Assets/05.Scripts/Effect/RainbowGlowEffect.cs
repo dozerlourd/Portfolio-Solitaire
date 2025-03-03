@@ -8,10 +8,10 @@ public class RainbowGlowEffect : MonoBehaviour
     Material material;
 
     float elapsedTime;
-    float lifeTime = 0.5f;
 
     float deltaTime;
 
+    [SerializeField] float lifeTime = 0.5f;
     [SerializeField] float originUVValue = 0.6f;
     [SerializeField] float originAlphaValue = 0.95f;
 
