@@ -1,17 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class RainbowGlowEffect : Effect
+public class FresnalCircleEffect : Effect
 {
     private void Update()
     {
-        if(elapsedTime < lifeTime)
+        if (elapsedTime < lifeTime)
         {
             deltaTime = Time.deltaTime;
-            IncreaseUVValue(deltaTime * 0.3f);
-            DecreaseAlphaValue(deltaTime * 1.5f);
+            IncreaseUVValue(deltaTime);
+            DecreaseAlphaValue(-deltaTime * 2f);
             elapsedTime += deltaTime;
         }
         else

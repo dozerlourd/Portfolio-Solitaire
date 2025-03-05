@@ -144,6 +144,15 @@ public class TileMatchingController : MonoBehaviour
                 rainbowGlowEffect_start.SetActive(true);
                 rainbowGlowEffect_end.SetActive(true);
 
+                GameObject outlineCircleEffect_start = effectController.OutlineCircleEffects.PopObject();
+                GameObject outlineCircleEffect_end = effectController.OutlineCircleEffects.PopObject();
+
+                outlineCircleEffect_start.transform.position = startTileComponent.transform.position;
+                outlineCircleEffect_end.transform.position = endTileComponent.transform.position;
+
+                outlineCircleEffect_start.SetActive(true);
+                outlineCircleEffect_end.SetActive(true);
+
                 PlayCorrectLogic(startTileComponent, endTileComponent);
 
                 startTileComponent.CorrectBoardCount();

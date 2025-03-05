@@ -1,4 +1,4 @@
-Shader "Custom/RainbowGlowEffect"
+Shader "Custom/FresnalCircleEffectShader"
 {
     Properties
     {
@@ -84,15 +84,19 @@ Shader "Custom/RainbowGlowEffect"
                 i.uv += center;
 
                 float distance = length(i.uv - center);
-                float circleMask = smoothstep(0.5, 0.4, distance);
+                float circleMask = smoothstep(0.5, 0.2, distance);
 
                 // Calc angle
-                float angle = atan2(i.uv.y - center.y, i.uv.x - center.x);
-                angle = (angle + UNITY_PI) / (2 * UNITY_PI); // 0 ~ 1 범위로 변환
+                // float angle = atan2(i.uv.y - center.y, i.uv.x - center.x);
+                // angle = (angle + UNITY_PI) / (2 * UNITY_PI); // 0 ~ 1 범위로 변환
 
                 // Calc HSV color
-                float3 hsvColor = float3(angle, 1.0, 1.0);
-                float3 rgbColor = HSVToRGB(hsvColor);
+                // float3 hsvColor = float3(angle, 1, 1);
+                // float3 rgbColor = HSVToRGB(hsvColor);
+                float3 rgbColor;
+                rgbColor.r = 1.5;
+                rgbColor.g = 0.3;
+                rgbColor.b = 0.2;
 
                 if(distance > circleMask + 0.5)
                 {
@@ -100,9 +104,9 @@ Shader "Custom/RainbowGlowEffect"
                 }
 
                 // Calc final color
-                fixed4 col = fixed4(rgbColor, 1.0) * circleMask;
+                fixed4 col = fixed4(rgbColor, 1.0) + (1 - circleMask); // Color Circle
 
-                col.a = smoothstep(0.5, 0.3, distance) * (2.5 * distance) * clamp(_AlphaValue, 0, 1);
+                col.a = smoothstep(0.3, 0.5, distance) * clamp(_AlphaValue, 0, 1);
 
                 return col;
             }

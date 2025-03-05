@@ -33,13 +33,19 @@ public class EffectController : MonoBehaviour
     [SerializeField] GameObject rainbowGlowEffectPrefab;
     [SerializeField] int rainbowGlowEffectCount = 0;
 
+    [SerializeField] GameObject outlineCircleEffectPrefab;
+    [SerializeField] int outlineCircleEffectCount = 0;
+
     PoolingEffect rainbowGlowEffects;
+    PoolingEffect outlineCircleEffects;
 
     public PoolingEffect RainbowGlowEffects => rainbowGlowEffects;
+    public PoolingEffect OutlineCircleEffects => outlineCircleEffects;
 
     void Awake()
     {
         rainbowGlowEffects = InstantiatePool(rainbowGlowEffectPrefab, rainbowGlowEffectCount, folderSystem.EffectFolder);
+        outlineCircleEffects = InstantiatePool(outlineCircleEffectPrefab, outlineCircleEffectCount, folderSystem.EffectFolder);
     }
 
     PoolingEffect InstantiatePool(GameObject prefab, int num, Transform parentTr = null)

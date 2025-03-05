@@ -1307,6 +1307,9 @@ MonoBehaviour:
   rainbowGlowEffectPrefab: {fileID: 7996412513058995960, guid: 7ca3ce7f828fb16428a4c1d2d8bc3a2a,
     type: 3}
   rainbowGlowEffectCount: 4
+  outlineCircleEffectPrefab: {fileID: 7629578454764904185, guid: 0d2ccae65bdb1c04a94c88bec3ccac11,
+    type: 3}
+  outlineCircleEffectCount: 4
 --- !u!1 &943719371
 GameObject:
   m_ObjectHideFlags: 0
