@@ -9,8 +9,8 @@ public class TileGenerateController : MonoBehaviour
 
     [SerializeField] GameObject[] tilePrefabs;
 
-    private int rows = 26;
-    private int cols = 10;
+    private int rows = 14 + 2; // Horizontal Tiles number + Margin(2)
+    private int cols = 6 + 2; // Vertical Tiles number + Margin(2)
 
     private bool isGenerateEven = false;
     private int generateTileNum = -1;

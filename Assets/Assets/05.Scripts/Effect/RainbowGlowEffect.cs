@@ -10,7 +10,7 @@ public class RainbowGlowEffect : Effect
         if(elapsedTime < lifeTime)
         {
             deltaTime = Time.deltaTime;
-            IncreaseUVValue(deltaTime * 0.3f);
+            IncreaseUVValue(deltaTime);
             DecreaseAlphaValue(deltaTime * 1.5f);
             elapsedTime += deltaTime;
         }

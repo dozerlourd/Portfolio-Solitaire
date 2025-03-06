@@ -84,7 +84,7 @@ Shader "Custom/FresnalCircleEffectShader"
                 i.uv += center;
 
                 float distance = length(i.uv - center);
-                float circleMask = smoothstep(0.5, 0.2, distance);
+                float circleMask = smoothstep(0.5, 0.4, distance);
 
                 // Calc angle
                 // float angle = atan2(i.uv.y - center.y, i.uv.x - center.x);
@@ -94,8 +94,8 @@ Shader "Custom/FresnalCircleEffectShader"
                 // float3 hsvColor = float3(angle, 1, 1);
                 // float3 rgbColor = HSVToRGB(hsvColor);
                 float3 rgbColor;
-                rgbColor.r = 1.5;
-                rgbColor.g = 0.3;
+                rgbColor.r = 4;
+                rgbColor.g = 0.65;
                 rgbColor.b = 0.2;
 
                 if(distance > circleMask + 0.5)
@@ -104,7 +104,7 @@ Shader "Custom/FresnalCircleEffectShader"
                 }
 
                 // Calc final color
-                fixed4 col = fixed4(rgbColor, 1.0) + (1 - circleMask); // Color Circle
+                fixed4 col = fixed4(rgbColor, 1.0) + (1 - circleMask) * 0.25; // Color Circle
 
                 col.a = smoothstep(0.3, 0.5, distance) * clamp(_AlphaValue, 0, 1);
 

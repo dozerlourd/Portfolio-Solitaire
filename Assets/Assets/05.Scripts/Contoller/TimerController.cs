@@ -16,7 +16,7 @@ public class TimerController : MonoBehaviour
         if (timerSlider != null && !CheckHasTimeLimit())
         {
             timeElapse += deltaTime;
-            timerSlider.value = (float)(timeElapse / timeLimit);
+            timerSlider.value = (1 - (float)(timeElapse / timeLimit));
         }
     }
 
@@ -25,7 +25,7 @@ public class TimerController : MonoBehaviour
         if (timerSlider != null && !CheckHasTimeLimit())
         {
             timeElapse += Time.deltaTime;
-            timerSlider.value = (float)(timeElapse / timeLimit);
+            timerSlider.value = (1 - (float)(timeElapse / timeLimit));
         }
     }
 }

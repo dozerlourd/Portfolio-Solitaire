@@ -112,5 +112,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeTime: 0.5
-  originUVValue: 0.8
+  originUVValue: 0.85
   originAlphaValue: 0.65
